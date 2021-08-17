@@ -1,23 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>wrkhub</title>
-</head>
-<body>
-  <main id="app"></main>
-  <script>
-    // stub a variable ReactJS checks. ReactJS assumes you're using a bundler, NodeJS or similar system that provides it the `process.env.NODE_ENV` variable.
-    window.process = {
-      env: {
-        NODE_ENV: 'development'
-      }
-    };
-  </script>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wrkhub</title>
 
-  <!-- This is https://github.com/marijnh/moduleserve, the secret sauce that allows us not need to bundle things during development, and have instantaneous iteration feedback, without any hot-reloading or extra build pipeline needed. -->
-  <script src="/moduleserve/load.js" data-module="/src/Index.bs.js"></script>
-  <!-- Our little watcher. Super clean. Check it out! -->
-  <script src="/watcher.js"></script>
-</body>
+    <!-- reset CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jgthms/minireset.css@master/minireset.min.css">
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>

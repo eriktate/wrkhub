@@ -1,61 +1,48 @@
-# ReasonReact Template & Examples
+# Svelte + TS + Vite
 
-This is:
-- A template for your new ReasonReact project.
-- A collection of thin examples illustrating ReasonReact usage.
-- Extra helper documentation for ReasonReact (full ReasonReact docs [here](https://reasonml.github.io/reason-react/)).
+This template should help get you started developing with Svelte and TypeScript in Vite.
 
-`src` contains 4 sub-folders, each an independent, self-contained ReasonReact example. Feel free to delete any of them and shape this into your project! This template's more malleable than you might be used to =).
+## Recommended IDE Setup
 
-The point of this template and examples is to let you understand and personally tweak the entirely of it. We **don't** give you an opaque, elaborate mega build setup just to put some boxes on the screen. It strikes to stay transparent, learnable, and simple. You're encouraged to read every file; it's a great feeling, having the full picture of what you're using and being able to touch any part.
+[VSCode](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
 
-## Run
+## Need an official Svelte framework?
 
-```sh
-npm install
-npm run server
-# in a new tab
-npm start
+Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+
+## Technical considerations
+
+**Why use this over SvelteKit?**
+
+- It brings its own routing solution which might not be preferable for some users.
+- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+  `vite dev` and `vite build` wouldn't work in a SvelteKit environment, for example.
+
+This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+
+Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
+
+**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
+
+Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
+
+**Why include `.vscode/extensions.json`?**
+
+Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
+
+**Why enable `allowJs` in the TS template?**
+
+While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
+
+**Why is HMR not preserving my local component state?**
+
+HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
+
+If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
+
+```ts
+// store.ts
+// An extremely simple external store
+import { writable } from 'svelte/store'
+export default writable(0)
 ```
-
-Open a new web page to `http://localhost:8000/`. Change any `.re` file in `src` to see the page auto-reload. **You don't need any bundler when you're developing**!
-
-**How come we don't need any bundler during development**? We highly encourage you to open up `index.html` to check for yourself!
-
-# Features Used
-
-|                           | Blinking Greeting | Reducer from ReactJS Docs | Fetch Dog Pictures | Reason Using JS Using Reason |
-|---------------------------|-------------------|---------------------------|--------------------|------------------------------|
-| No props                  |                   | ✓                         |                    |                              |
-| Has props                 |                   |                           |                    | ✓                            |
-| Children props            | ✓                 |                           |                    |                              |
-| No state                  |                   |                           |                    | ✓                            |
-| Has state                 | ✓                 |                           |  ✓                 |                              |
-| Has state with useReducer |                   | ✓                         |                    |                              |
-| ReasonReact using ReactJS |                   |                           |                    | ✓                            |
-| ReactJS using ReasonReact |                   |                           |                    | ✓                            |
-| useEffect                 | ✓                 |                           |  ✓                 |                              |
-| Dom attribute             | ✓                 | ✓                         |                    | ✓                            |
-| Styling                   | ✓                 | ✓                         |  ✓                 | ✓                            |
-| React.array               |                   |                           |  ✓                 |                              |
-
-# Bundle for Production
-
-We've included a convenience `UNUSED_webpack.config.js`, in case you want to ship your project to production. You can rename and/or remove that in favor of other bundlers, e.g. Rollup.
-
-We've also provided a barebone `indexProduction.html`, to serve your bundle.
-
-```sh
-npm install webpack webpack-cli
-# rename file
-mv UNUSED_webpack.config.js webpack.config.js
-# call webpack to bundle for production
-./node_modules/.bin/webpack
-open indexProduction.html
-```
-
-# Handle Routing Yourself
-
-To serve the files, this template uses a minimal dependency called `moduleserve`. A URL such as `localhost:8000/scores/john` resolves to the file `scores/john.html`. If you'd like to override this and handle URL resolution yourself, change the `server` command in `package.json` from `moduleserve ./ --port 8000` to `moduleserve ./ --port 8000 --spa` (for "single page application"). This will make `moduleserve` serve the default `index.html` for any URL. Since `index.html` loads `Index.bs.js`, you can grab hold of the URL in the corresponding `Index.re` and do whatever you want.
-
-By the way, ReasonReact comes with a small [router](https://reasonml.github.io/reason-react/docs/en/router) you might be interested in.

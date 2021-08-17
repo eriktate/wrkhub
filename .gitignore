@@ -5,7 +5,5 @@ npm-debug.log
 node_modules/
 bundleOutput/
 
-ui/lib
-ui/indexProduction.html
-ui/**/*.bs.js
+ui/dist/
 /.postgres
